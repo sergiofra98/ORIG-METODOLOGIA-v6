@@ -1,0 +1,55 @@
+<div>
+  <div class="container row">
+    <div class="col-sm">
+      <h3>Consulta</h3>
+      <form class="form-group" #formConsulta="ngForm">
+        <div class="row">
+          <label>Fecha:</label>
+          <div readonly style="width:204px;" class="form-control"> {{form.fecha | date:'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="row">
+          <label>Empresa
+            <span>*</span>:</label>
+          <select class="form-control" required name="empresa" #empresa="ngModel" [(ngModel)]="form.empresa">
+            <option *ngIf="perfilEmpresas.length" value="" selected="selected" disabled hidden>Elija una opción</option>
+            <option *ngIf="!perfilEmpresas.length" value="" selected="selected" disabled hidden>No hay opciones disp.</option>
+            <option *ngFor="let i of perfilEmpresas" value="{{i.empresa}}" selected="selected">{{i.empresa}}</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>Nivel de Riesgo
+            <span>*</span>:</label>
+          <select class="form-control" required name="nivelDeRiesgo" #nivelDeRiesgo="ngModel" [(ngModel)]="form.nivelDeRiesgo">
+            <option value="" selected="selected" disabled hidden>Elija una opción</option>
+            <option value="Bajo">Bajo</option>
+            <option value="Medio">Medio</option>
+            <option value="Alto">Alto</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>Nombre(s):</label>
+          <input class="form-control" type="text" name="nombre" #nombre="ngModel" [(ngModel)]="form.nombre">
+        </div>
+        <div class="row">
+          <label>Apellido Paterno:</label>
+          <input class="form-control" type="text" name="apellidoPaterno" #apellidoPaterno="ngModel" [(ngModel)]="form.apellidoPaterno">
+        </div>
+        <div class="row">
+          <label>Apellido Materno:</label>
+          <input class="form-control" type="text" name="apellidoMaterno" #apellidoMaterno="ngModel" [(ngModel)]="form.apellidoMaterno">
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" (click)="iniciarConsulta()" [disabled]="formConsulta.form.invalid">Consultar</button>
+          <button class="btn btn-secondary" (click)="formConsulta.reset()">Limpiar</button>
+        </div>
+        <div class="row">
+          <small>Elementos con
+            <span>*</span> son obligatorios</small>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-resultados [cargandoRes]="cargandoRes"[mostrarResultados]="mostrarResultados" [data]='resultadosConsulta'></app-resultados>
+
+</div>

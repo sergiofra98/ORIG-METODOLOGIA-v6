@@ -1,0 +1,8 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+body{
+    min-width: 1024px;
+    max-width: 1254px;
+    margin: auto;
+    background-color: #858da0;
+}

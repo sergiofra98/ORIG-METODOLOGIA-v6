@@ -1,0 +1,55 @@
+.container{
+    width: 258px;
+    height: 772px;
+    border-radius: 18px;
+    margin: 24px;
+    background-color: #dfdfdf;
+    display:block;
+}
+
+.row{
+    display:block;
+    padding: 9px 14px;
+    float:left;
+}
+
+h3{
+    text-align: center;
+    width: 204px;
+}
+
+.col{
+    margin-bottom: 24px;
+}
+
+.btn{
+    margin-top:12px;
+    width: 204px;
+}
+
+span{
+    color:red;
+}
+
+.row input, .row select{
+    width: 204px;
+    display:inherit;
+}
+
+#calendario {
+    display: inherit;
+}
+
+.alert{
+    position: fixed; 
+    display: block;
+    width: 204px;
+    top: 520px;
+
+}
+
+app-resultados{
+    float: left;
+    width: calc(100% - 330px);
+}
+

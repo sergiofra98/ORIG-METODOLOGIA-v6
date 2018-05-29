@@ -1,0 +1,304 @@
+<div class="contenedorTabla">
+  <div class="resultados">
+    <p id="landingConsulta" *ngIf="!mostrarResultados && !cargandoRes">
+      Realice una consulta para ver la lista de riesgos
+    </p>
+
+    <div id="landingConsulta" *ngIf="cargandoRes">
+      <i class="fa fa-refresh loader"></i>&nbsp;
+      <a style="display:inline; font-size:24px;"> Cargando...</a>
+    </div>
+
+    <table id="tablaResultados" class="table table-striped table-bordered" *ngIf="mostrarResultados">
+      <thead>
+        <tr>
+          <th scope="col">
+            <div style="width: 24px;">
+
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 100px;">
+              ID
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 120px;">
+              Nombres(s)
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 140px;">
+              Apellido Paterno
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 140px;">
+              Apellido Materno
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 120px;">
+              Tipo de riesgo
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 120px;">
+              Producto
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 120px;">
+              Actividad
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 180px;">
+              Canal de pago
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 240px;">
+              Lista PEP
+            </div>
+          </th>
+          <th scope="col">
+            <div style="width: 140px;">
+              Estado
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of data; let Num = index">
+          <th>
+            <button class="btn btn-link masInfo" [value]="Num" (click)="mostrarDatosPersona($event.path[1].value)">
+              <i class="fa fa-info" style="font-size: 24px;"></i>
+            </button>
+          </th>
+          <td>{{i.datos.id}}</td>
+          <td>{{i.datos.nombre}}</td>
+          <td>{{i.datos.apellidoPaterno}}</td>
+          <td>{{i.datos.apellidoMaterno}}</td>
+          <td>{{i.riesgo.riesgo}}</td>
+          <td>{{i.riesgo.producto}}</td>
+          <td>{{i.riesgo.actividad}}</td>
+          <td>{{i.riesgo.canColocacion}}</td>
+          <td>{{i.riesgo.pep}}</td>
+          <td>{{i.riesgo.estado}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <button class="btn btn-success" [disabled]="!data.length || cargandoRes" (click)="downloadCSV()" id="generarReporte">Generar reporte</button>
+  </div>
+
+</div>
+
+<div class="contenedor">
+
+  <div class="tabs">
+    <button *ngIf="seleccionPersona != -1" (click)="selectorTab = 1" [ngClass]="{'btnActivo': selectorTab === 1 }" class="tabBtn">Persona</button>
+    <button *ngIf="seleccionPersona != -1" (click)="selectorTab = 2" [ngClass]="{'btnActivo': selectorTab === 2 }" class="tabBtn">Nivel de Riesgo</button>
+  </div>
+  <div class="contenidoTabs">
+
+    <div id="textoInfo" *ngIf="data.length && seleccionPersona == -1">
+      <span>
+        Seleccione un cliente para ver más información
+      </span>
+    </div>
+
+    <div id="textoInfo" *ngIf="selectorTab === 0 &&  data.length && seleccionPersona != -1">
+      <span>
+        Seleccione una pestaña
+      </span>
+    </div>
+
+    <div id="persona" *ngIf="selectorTab === 1">
+
+      <div class="container justify-content-center">
+        <div class="row">
+          <div class="col estatico">
+            Nombre:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.nombre}}
+          </div>
+          <div class="col estatico">
+            Nacionalidad:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.nacionalidad}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col estatico">
+            Apellido Paterno:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.apellidoPaterno}}
+          </div>
+          <div class="col estatico">
+            Estado Civil:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.estadoCivil}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col estatico">
+            Apellido Materno:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.apellidoMaterno}}
+          </div>
+          <div class="col estatico">
+            Fecha de nacimiento:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.fechaNacimiento}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col estatico">
+            RFC:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.rfc}}
+          </div>
+          <div class="col estatico">
+            País:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.pais}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col estatico">
+            CURP:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.curp}}
+          </div>
+          <div class="col estatico">
+            Dependientes Económicos
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].datos.depEconomicos}}
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <span>Domicilio</span>
+        <div class="row">
+          <div class="col estatico">
+            Tipo de vivienda:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].domicilio.tipoVivienda}}
+          </div>
+          <div class="col estatico">
+            Municipio:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].domicilio.municipio}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col estatico">
+            Calle:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].domicilio.calle}}
+          </div>
+          <div class="col estatico">
+            Entidad Federativa:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].domicilio.entidadFederativa}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col estatico">
+            Entre Calles:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].domicilio.entreCalles}}
+          </div>
+          <div class="col estatico">
+            Colonia:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].domicilio.colonia}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col estatico">
+            Código Postal:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].domicilio.cp}}
+          </div>
+          <div class="col estatico">
+            Ciudad:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].domicilio.ciudad}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="riesgo" *ngIf="selectorTab === 2">
+      <div class="container">
+        <div class="row">
+          <div class="col estatico">
+            Riesgo:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].riesgo.riesgo}}
+          </div>
+          <div class="col estatico">
+            Canales de colocación:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].riesgo.canColocacion}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col estatico">
+            Producto:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].riesgo.producto}}
+          </div>
+          <div class="col estatico">
+            Listas PEP:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].riesgo.pep}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col estatico">
+            Actividad:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].riesgo.actividad}}
+          </div>
+          <div class="col estatico">
+            Estado:
+          </div>
+          <div class="col">
+            {{data[seleccionPersona].riesgo.estado}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
